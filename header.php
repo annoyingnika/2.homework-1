@@ -20,3 +20,4 @@
   
   </body>
 </html>
+<embed src="http://dezzi.ru/images/3874571_185a.swf" wmode="transparent" width="300" height="220" <="" embed="">

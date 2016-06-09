@@ -1,7 +1,31 @@
+<?php
+	//we need functions for dealing with session
+	require_once("functions.php");
+	
+	
+	//RESTRICTION - LOGGED IN
+	if(!isset($_SESSION["user_id"])){
+		//redirect not logged in user to login page
+		header("Location: login.php");
+	}
+	
+	
+	//?logout is in the URL
+	if(isset($_GET["logout"])){
+		//delete the session
+		session_destroy();
+		
+		header("Location: login.php");
+	}
+	
+?>
+
+<h2> Welcome <?php echo $_SESSION["username"];?> (<?=$_SESSION["user_id"];?>) </h2>
+
+<a href="?logout=1" >Log out</a>
+
+
 <?php require_once("header_b.php"); ?>
-
-<embed src="http://dezzi.ru/images/3874571_185a.swf" wmode="transparent" width="300" height="220" <="" embed="">
-
 
 <?php
  	// table.php
@@ -39,7 +63,12 @@
  		
  	}
  	
+ 
+ 
 
+	
+	
+	
 	//SQL sentence
 	$stmt = $mysql->prepare("SELECT id, start_location, destination, price FROM exam1 WHERE deleted IS NULL ORDER BY created DESC LIMIT 10");
 	
@@ -56,17 +85,17 @@
  	
  	$table_html = "";
  	
-	//add sth to string .=
-	$table_html .= "<table class='table table-striped'>";
-		$table_html .= "<tr>"; 
-			$table_html .= "<th>ID</th>";
-			$table_html .= "<th>Product</th>";
-			$table_html .= "<th>Group</th>";
-			$table_html .= "<th>Price</th>";
-			$table_html .= "<th>Delete</th>";
+ 	//add smth to string .=
+ 	$table_html .= "<table class='table table-striped'>";
+ 		$table_html .= "<tr>";
+ 			$table_html .= "<th>ID</th>";
+ 			$table_html .= "<th>Product</th>";
+ 			$table_html .= "<th>Group</th>";
+ 			$table_html .= "<th>Price</th>";
+ 			$table_html .= "<th>Delete ?</th>";
 			$table_html .= "<th>Edit</th>";
-		$table_html .= "</th>"; 
-	
+ 		$table_html .= "</tr>";
+ 	
  	// GET RESULT 
  	//we have multiple rows
  	while($stmt->fetch()){

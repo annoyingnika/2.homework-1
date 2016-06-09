@@ -11,72 +11,59 @@
 	//*************************************
 	
 	
-	if(isset($_GET["name"])) {
+	if(isset($_GET["product"])) {
 		
-		//only if there is name in the URL
-		//echo "there is name ";
-		
-		//if it's empty
-		if(empty($_GET["name"])){
-			echo "Please, enter the name of the recipient!"."<br>"; //it is empty
-			$everything_was_okay = false;
-		}else{
-			echo "Name: ".$_GET["name"]."<br>"; //its not empty
-		}
-	}else{
-		echo "There is no such thing as name";
-		$everything_was_okay = false;
-		
-	}
-	if(isset($_GET["from"])) {
-		
-		//only if there is from in the URL
-		//echo "there is from ";
+		//only if there is product in the URL
+		//echo "there is product ";
 		
 		//if it's empty
-		if(empty($_GET["from"])){
-			echo "Please, enter your name!"."<br>";	//it is empty
+		if(empty($_GET["product"])){
+			echo "Please, enter the product"."<br>"; //it is empty
 		}else{
-			echo "From: ".$_GET["from"]."<br>"; //its not empty
+			echo "Product: ".$_GET["product"]."<br>"; //its not empty
 		}
 	}else{
-		//echo "there is no such thing as from";
-		
-	}
-	if(isset($_GET["message"])){
-		
-		//only if there is message in the URL
-		//echo "there is message ";
-		
-		//if it's empty
-		if(empty($_GET["message"])){
-			echo "Please, enter the message!"."<br>"; //it is empty
-		}else{
-			echo "Message: ".$_GET["message"]."<br>"; //its not empty
-		}
-	}else{
-		//echo "there is no such thing as message";
+		echo "There is no such thing as product";
 		
 	}
 	
-	//Getting the message from address
-	// if there is ?name= .. then $_GET["name"]
+	if(isset($_GET["group"])) {
+		
+		//only if there is group in the URL
+		//echo "there is group ";
+		
+		//if it's empty
+		if(empty($_GET["group"])){
+			echo "Please, enter the group of the prooduct!"."<br>";	//it is empty
+		}else{
+			echo "Group: ".$_GET["group"]."<br>"; //its not empty
+		}
+	}else{
+		//echo "there is no such thing as group";
+		
+	}
+	if(isset($_GET["price"])){
+		
+		//only if there is price in the URL
+		//echo "there is price ";
+		
+		//if it's empty
+		if(empty($_GET["price"])){
+			echo "Please, enter how much it costs!"."<br>"; //it is empty
+		}else{
+			echo "Price: ".$_GET["price"]."<br>"; //its not empty
+		}
+	}else{
+		//echo "there is no such thing as price";
+		
+	}
 	
-	//$my_message = $_GET["message"];
-	//$name = $_GET["name"];
-	//$from = $_GET["from"];
-
-	
-	
-	
-	//echo $from." says \"".$my_message."\" to ".$name;
-
 
 
 // ? was everthing okay
 	if($everything_was_okay == true){
 		
-		echo "Saving to database ...";
+		echo "Saving ...";
 		
 		//connection with the username and password
 		//access username from config
@@ -91,7 +78,7 @@
 		//4 database
 		$mysql = new mysqli("localhost", $db_username, $db_password, "webpr2016_nicole");
 		
-		$stmt = $mysql->prepare("INSERT INTO messages_sample(recipient, message, sender) VALUES(?,?,?)");
+		$stmt = $mysql->prepare("INSERT INTO exam1 (start_location, destination, price) VALUES(?,?,?)");
 		
 		//echo error
 		echo $mysql->error;
@@ -102,7 +89,7 @@
 		// d - decimal, floatval
 		
 		// for each question mark its type with one letter
-		$stmt->bind_param("sss", $_GET["name"], $_GET["message"], $_GET["from"]);
+		$stmt->bind_param("sss", $_GET["product"], $_GET["group"], $_GET["price"]);
 		
 		//save
 		if($stmt->execute()){
@@ -131,21 +118,21 @@
 				}
 ?>
 <a href="table.php">table</a>
-<h2> First application </h2>
+<h2> Wish List </h2>
 
 <form method="get">
 
-	<label for="name">To:<label><br>
-	<input type="text" name="name"><br>
+	<label for="product">Product:<label><br>
+	<input type="text" name="product"><br>
 	
-	<label for="from">From:<label><br>
-	<input type="text" name="from"><br>
+	<label for="group">Group:<label><br>
+	<input type="text" name="group"><br>
 	
-	<label for="message">Message:<label><br>
-	<input type="text" name="message"><br>
+	<label for="price">Price in EUR:<label><br>
+	<input type="text" name="price"><br>
 	
 	
-	<input type="submit" value="Save to DB">
+	<input type="submit" value="Add">
 	
 	
 <form>	

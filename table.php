@@ -13,7 +13,7 @@
 		echo "Deleting row with id:".$_GET["deleted"];
 		
 		//NOW - current day time
-		$stmt = $mysql->prepare("UPDATE messages_sample SET deleted=NOW() WHERE id = ?");
+		$stmt = $mysql->prepare("UPDATE exam1 SET deleted=NOW() WHERE id = ?");
 		
 		echo $mysql->error;
 		
@@ -33,7 +33,7 @@
 	
 	
 	//SQL sentence
-	$stmt = $mysql->prepare("SELECT id, recipient, message, created FROM messages_sample WHERE deleted is NULL ORDER BY created DESC LIMIT 10");
+	$stmt = $mysql->prepare("SELECT id, start_location, destination, price FROM exam1 WHERE deleted is NULL ORDER BY created DESC LIMIT 10");
 	
 	//WHERE deleted is NULL show only those what is not deleted
 	
@@ -41,7 +41,7 @@
 	echo $mysql->error;
 	
 	//variables for data for each row we will get
-	$stmt->bind_result($id, $recipient, $message, $created);
+	$stmt->bind_result($id, $start_location, $destination, $price);
 
 	//quiery
 	$stmt->execute();
@@ -52,34 +52,34 @@
 	$table_html .= "<table>"; //start new table
 		$table_html .= "<tr>"; 
 			$table_html .= "<th>ID</th>";
-			$table_html .= "<th>Recipient</th>";
-			$table_html .= "<th>Message</th>";
-			$table_html .= "<th>Created</th>";
-			$table_html .= "<th>Deleted ?</th>";
-	$table_html .= "</th>"; 
+			$table_html .= "<th>Product</th>";
+			$table_html .= "<th>Group</th>";
+			$table_html .= "<th>Price</th>";
+			$table_html .= "<th>Delete</th>";
+			$table_html .= "<th>Edit</th>";
+		$table_html .= "</th>"; 
 	
 	
-	//GET RESULT
-	//we have multiple rows
-	while($stmt->fetch()){
+		//GET RESULT
+		//we have multiple rows
+		while($stmt->fetch()){
 		
 		//DO SOMETHING FOR EACH ROW
 		//echo $id." ".$message."<br>";
 		
-		$table_html .= "<table>"; //start new row
 		$table_html .= "<tr>"; //add columns
 			$table_html .= "<td>".$id."</td>";
-			$table_html .= "<td>".$recipient."</td>";
-			$table_html .= "<td>".$message."</td>";
-			$table_html .= "<td>".$created."</td>";
-			$table_html .= "<td><a href='?deleted=".$id."'>X</td>";
+			$table_html .= "<td>".$start_location."</td>";
+			$table_html .= "<td>".$destination."</td>";
+			$table_html .= "<td>".$price."</td>";
+			$table_html .= "<td><a href='?deleted=".$id."'>X</a></td>";
+			$table_html .= "<td><a href='edit.php?edit=".$id."'>V</a></td>";
+			
 		$table_html .= "</th>"; //end row
-	}	
+		}	
 	$table_html .= "</table>"; //end table
+	
 	echo $table_html;
 
 	
 ?>
-
-<a href="app.php">app</a>	
-
